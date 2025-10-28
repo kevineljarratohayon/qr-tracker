@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
-import links from '../links.json' assert { type: 'json' };
+
+const links = require('../links.json');
 
 const LOG_ENDPOINT = process.env.LOG_ENDPOINT;
 
