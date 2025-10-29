@@ -1,10 +1,9 @@
-import fetch from 'node-fetch';
-
-const links = require('../links.json');
+const fetch = require('node-fetch');      // CommonJS
+const links = require('../links.json');   // CommonJS
 
 const LOG_ENDPOINT = process.env.LOG_ENDPOINT;
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   const { slug } = req.query;
   const target = links[slug];
 
@@ -13,10 +12,12 @@ export default async function handler(req, res) {
     return;
   }
 
+  // Información del visitante
   const ua = req.headers['user-agent'] || '';
   const ref = req.headers['referer'] || '';
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
 
+  // Enviar log a Google Apps Script
   try {
     await fetch(LOG_ENDPOINT, {
       method: 'POST',
@@ -27,6 +28,7 @@ export default async function handler(req, res) {
     console.error('Log error', err);
   }
 
+  // Redirigir al destino (ej: Google)
   res.writeHead(302, { Location: target });
   res.end();
-}
+};
