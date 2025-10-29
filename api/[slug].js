@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');      // CommonJS
-const links = require('../links.json');   // CommonJS
+const links = require('./links.json');   // CommonJS
 
 const LOG_ENDPOINT = process.env.LOG_ENDPOINT;
 
